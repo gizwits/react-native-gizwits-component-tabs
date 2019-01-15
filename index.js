@@ -31,7 +31,14 @@ const styles = StyleSheet.create({
   androidTabs: {
     backgroundColor: 'rgba(255,255,255,0.2)'
   },
-  center: { textAlign: 'center', color: '#fff', fontSize: 18 },
+  tabActive: {
+    color: '#fff',
+  },
+  center: {
+    textAlign: 'center',
+    color: 'rgba(255,255,255,0.4)',
+    fontSize: 18,
+  },
   tabContentView: {
     flex: 1,
     paddingTop: width * 0.05,
@@ -53,9 +60,9 @@ class Tabs extends Component {
               return (
                 <Button
                   onPress={() => onChange(item.id)}
-                  style={styles.tab} underlayColor="rgba(0,0,0,0)"
+                  style={[styles.tab]} underlayColor="rgba(0,0,0,0)"
                 >
-                  <Text style={styles.center}>{item.title}</Text>
+                  <Text style={[styles.center, item.id === page ? styles.tabActive : {}]}>{item.title}</Text>
                 </Button>
               );
             })
