@@ -56,9 +56,10 @@ class Tabs extends Component {
       <View style={styles.tabs} tint="light" intensity={20}>
         <View style={styles.buttons}>
           {
-            tabs.map((item) => {
+            tabs.map((item, index) => {
               return (
                 <Button
+                  key={index}
                   onPress={() => onChange(item.id)}
                   style={[styles.tab]} underlayColor="rgba(0,0,0,0)"
                 >
