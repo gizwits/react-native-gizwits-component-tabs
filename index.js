@@ -84,7 +84,7 @@ Tabs.propTypes = {
   tabs: PropTypes.array,
   page: PropTypes.string,
   onChange: PropTypes.func,
-  children: PropTypes.element,
+  children: PropTypes.any,
 };
 
 const Tab = ({ children }) => {
