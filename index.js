@@ -32,11 +32,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.2)'
   },
   tabActive: {
-    color: '#fff',
+    opacity: 1,
   },
   center: {
     textAlign: 'center',
-    color: 'rgba(255,255,255,0.4)',
+    color: '#fff',
+    opacity: 0.4,
     fontSize: 18,
   },
   tabContentView: {
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
 
 class Tabs extends Component {
   render() {
-    const { tabs, onChange, page, children } = this.props;
+    const { tabs, textStyle, onChange, page, children } = this.props;
     const child = children.filter(item => item.props.pageId === page);
     return (
       <View style={styles.tabs} tint="light" intensity={20}>
@@ -63,7 +64,7 @@ class Tabs extends Component {
                   onPress={() => onChange(item.id)}
                   style={[styles.tab]} underlayColor="rgba(0,0,0,0)"
                 >
-                  <Text style={[styles.center, item.id === page ? styles.tabActive : {}]}>{item.title}</Text>
+                  <Text style={[styles.center, textStyle, item.id === page ? styles.tabActive : {}]}>{item.title}</Text>
                 </Button>
               );
             })
@@ -82,9 +83,10 @@ class Tabs extends Component {
 
 Tabs.propTypes = {
   tabs: PropTypes.array,
+  textStyle: PropTypes.object,
   page: PropTypes.string,
   onChange: PropTypes.func,
-  children: PropTypes.element,
+  children: PropTypes.any,
 };
 
 const Tab = ({ children }) => {
