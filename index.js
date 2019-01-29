@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, Dimensions } from 'react-native';
 
 import PropTypes from 'prop-types';
 import Button from './buttons';
+import PlatformBlurView from './PlatformBlurView';
 
 const width = Dimensions.get('window').width;
 
@@ -23,7 +24,9 @@ const styles = StyleSheet.create({
   tab: {
     flex: 1,
     paddingBottom: 16,
-    paddingTop: 16
+    paddingTop: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0)'
   },
   content: {
     flex: 1,
@@ -37,7 +40,6 @@ const styles = StyleSheet.create({
   center: {
     textAlign: 'center',
     color: '#fff',
-    opacity: 0.4,
     fontSize: 18,
   },
   tabContentView: {
@@ -51,20 +53,30 @@ const styles = StyleSheet.create({
 
 class Tabs extends Component {
   render() {
-    const { tabs, textStyle, onChange, page, children } = this.props;
+    const { textStyle, onChange, page, children, tintColor } = this.props;
     const child = children.filter(item => item.props.pageId === page);
+
+    const titles = children.map(item => {
+      return {title: item.props.title, pageId: item.props.pageId};
+    })
+
     return (
-      <View style={styles.tabs} tint="light" intensity={20}>
+      <PlatformBlurView style={styles.tabs}>
         <View style={styles.buttons}>
           {
-            tabs.map((item, index) => {
+            titles.map((item, index) => {
               return (
                 <Button
                   key={index}
-                  onPress={() => onChange(item.id)}
-                  style={[styles.tab]} underlayColor="rgba(0,0,0,0)"
+                  onPress={() => onChange(item.pageId)}
+                  style={
+                    [
+                      styles.tab,
+                      item.pageId === page ? {borderBottomColor: tintColor} : {}
+                    ]
+                  } underlayColor="rgba(0,0,0,0)"
                 >
-                  <Text style={[styles.center, textStyle, item.id === page ? styles.tabActive : {}]}>{item.title}</Text>
+                  <Text style={[styles.center, textStyle, item.pageId === page ? {color: tintColor} : {}]}>{item.title}</Text>
                 </Button>
               );
             })
@@ -76,17 +88,17 @@ class Tabs extends Component {
           }
         </View>
 
-      </View>
+      </PlatformBlurView>
     );
   }
 }
 
 Tabs.propTypes = {
-  tabs: PropTypes.array,
   textStyle: PropTypes.object,
   page: PropTypes.string,
   onChange: PropTypes.func,
   children: PropTypes.any,
+  tintColor: PropTypes.string,
 };
 
 const Tab = ({ children }) => {
