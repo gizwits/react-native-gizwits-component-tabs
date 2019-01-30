@@ -44,9 +44,6 @@ const styles = StyleSheet.create({
   },
   tabContentView: {
     flex: 1,
-    paddingTop: width * 0.05,
-    paddingLeft: width * 0.04,
-    paddingRight: width * 0.04
   }
 });
 
