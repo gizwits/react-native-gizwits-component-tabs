@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Platform } from 'react-native';
-import { BlurView } from 'expo';
+import { BlurView } from 'expo-blur';
 
 const PlatformBlurView = ({ children, style }) => {
   if (Platform.OS === 'ios') {
