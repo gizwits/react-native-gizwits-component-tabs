@@ -54,7 +54,8 @@ class Tabs extends Component {
     const child = children.filter(item => item.props.pageId === page);
 
     const titles = children.map(item => {
-      return { title: item.props.title, pageId: item.props.pageId };
+      const { title, pageId, ccessible, accessibilityLabel, testID } = item.props;
+      return { title, pageId, ccessible, accessibilityLabel, testID };
     })
 
     return (
