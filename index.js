@@ -50,30 +50,35 @@ const styles = StyleSheet.create({
 
 class Tabs extends Component {
   render() {
-    const { textStyle, onChange, page, children, tintColor } = this.props;
+    const { textStyle, onChange, page, children, tintColor, buttonStyles, buttonBoxStyles, tabsStyles } = this.props;
     const child = children.filter(item => item.props.pageId === page);
 
     const titles = children.map(item => {
-      return {title: item.props.title, pageId: item.props.pageId};
+      return { title: item.props.title, pageId: item.props.pageId };
     })
 
     return (
-      <PlatformBlurView style={styles.tabs}>
-        <View style={styles.buttons}>
+      <PlatformBlurView style={[styles.tabs, tabsStyles]}>
+        <View style={[styles.buttons, buttonBoxStyles]}>
           {
             titles.map((item, index) => {
+              const { pageId, title, accessible, accessibilityLabel, testID } = item;
               return (
                 <Button
+                  accessible={accessible}
+                  accessibilityLabel={accessibilityLabel}
+                  testID={testID}
                   key={index}
-                  onPress={() => onChange(item.pageId)}
+                  onPress={() => onChange(pageId)}
                   style={
                     [
                       styles.tab,
-                      item.pageId === page ? {borderBottomColor: tintColor} : {}
+                      item.pageId === page ? { borderBottomColor: tintColor } : {},
+                      buttonStyles,
                     ]
                   } underlayColor="rgba(0,0,0,0)"
                 >
-                  <Text style={[styles.center, textStyle, item.pageId === page ? {color: tintColor} : {}]}>{item.title}</Text>
+                  <Text style={[styles.center, textStyle, pageId === page ? { color: tintColor } : {}]}>{title}</Text>
                 </Button>
               );
             })
@@ -96,6 +101,9 @@ Tabs.propTypes = {
   onChange: PropTypes.func,
   children: PropTypes.any,
   tintColor: PropTypes.string,
+  buttonStyles: PropTypes.object,
+  buttonBoxStyles: PropTypes.object,
+  tabsStyles: PropTypes.object,
 };
 
 const Tab = ({ children }) => {
