@@ -5,13 +5,13 @@ import { BlurView } from 'expo-blur';
 const PlatformBlurView = ({ children, style }) => {
   if (Platform.OS === 'ios') {
     return (
-      <BlurView style={style} tint="default" intensity={100}>
+      <BlurView style={style} tint="dark" intensity={50}>
         {children}
       </BlurView>
     );
   }
   return (
-    <View style={[style, {backgroundColor: 'rgba(255,255,255,0.2)'}]}>
+    <View style={[style, { backgroundColor: 'rgba(255,255,255,0.2)' }]}>
       {children}
     </View>
   );
