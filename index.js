@@ -9,11 +9,16 @@ import PlatformBlurView from './PlatformBlurView';
 const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
-  tabs: {
+  container: {
     flexDirection: 'column',
     flex: 1,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
+    overflow: 'hidden',
+  },
+  tabs: {
+    flexDirection: 'column',
+    flex: 1,
   },
   buttons: {
     flexDirection: 'row',
@@ -60,39 +65,41 @@ class Tabs extends Component {
     })
 
     return (
-      <PlatformBlurView style={[styles.tabs, tabsStyles]}>
-        <View style={[styles.buttons, buttonBoxStyles]}>
-          {
-            titles.map((item, index) => {
-              const { pageId, title, accessible, accessibilityLabel, testID } = item;
-              return (
-                <Button
-                  accessible={accessible}
-                  accessibilityLabel={accessibilityLabel}
-                  testID={testID}
-                  key={index}
-                  onPress={() => onChange(pageId)}
-                  style={
-                    [
-                      styles.tab,
-                      item.pageId === page ? { borderBottomColor: tintColor } : {},
-                      buttonStyles,
-                    ]
-                  } underlayColor="rgba(0,0,0,0)"
-                >
-                  <Text style={[styles.center, textStyle, pageId === page ? { color: tintColor } : {}]}>{title}</Text>
-                </Button>
-              );
-            })
-          }
-        </View>
-        <View style={styles.content}>
-          {
-            child
-          }
-        </View>
+      <View style={[styles.container, tabsStyles]}>
+        <PlatformBlurView style={styles.tabs}>
+          <View style={[styles.buttons, buttonBoxStyles]}>
+            {
+              titles.map((item, index) => {
+                const { pageId, title, accessible, accessibilityLabel, testID } = item;
+                return (
+                  <Button
+                    accessible={accessible}
+                    accessibilityLabel={accessibilityLabel}
+                    testID={testID}
+                    key={index}
+                    onPress={() => onChange(pageId)}
+                    style={
+                      [
+                        styles.tab,
+                        item.pageId === page ? { borderBottomColor: tintColor } : {},
+                        buttonStyles,
+                      ]
+                    } underlayColor="rgba(0,0,0,0)"
+                  >
+                    <Text style={[styles.center, textStyle, pageId === page ? { color: tintColor } : {}]}>{title}</Text>
+                  </Button>
+                );
+              })
+            }
+          </View>
+          <View style={styles.content}>
+            {
+              child
+            }
+          </View>
 
-      </PlatformBlurView>
+        </PlatformBlurView>
+      </View>
     );
   }
 }
